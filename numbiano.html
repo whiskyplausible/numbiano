@@ -132,7 +132,7 @@ function doOnOrientationChange()
 			//window.alert("note on");
 				
                 var oscillator = context.createOscillator();
-                oscillator.type = 'sine';
+                oscillator.type = 'triangle';
                 oscillator.frequency.value = frequency;
      		 var gainNode = context.createGain();
      		 gainNode.connect(context.destination);
