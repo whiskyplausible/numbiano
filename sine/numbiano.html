@@ -31,7 +31,7 @@
 		
 		
 		
-        <script type="text/javascript" async="" src="numbiano_files/ga.js"></script><script src="./src/qwerty-hancock.js"></script>
+        <script src="./src/qwerty-hancock.js"></script>
         <script>
 	
 
@@ -122,9 +122,9 @@ function doOnOrientationChange()
                 },
                 keyboard = new QwertyHancock(settings);
 				
-	    masterGain = context.createGain();
+masterGain = context.createGain();
             nodes = [];
-	    gainNodes = [];
+
             masterGain.gain.value = 0.3;
             masterGain.connect(context.destination); 
 
@@ -132,47 +132,33 @@ function doOnOrientationChange()
 			//window.alert("note on");
 				
                 var oscillator = context.createOscillator();
-                oscillator.type = 'triangle';
+                oscillator.type = 'sine';
                 oscillator.frequency.value = frequency;
-     		 var gainNode = context.createGain();
-     		 gainNode.connect(context.destination);
-                oscillator.connect(gainNode);
-                gainNode.gain.setValueAtTime(1.0, context.currentTime);
-
+                oscillator.connect(masterGain);
                 oscillator.start(0);
-		gainNodes.push(gainNode);
+
                 nodes.push(oscillator);
             };
 
-	function disconnectNode(myNode) {
-myNode.disconnect();
-	}
-
-
             keyboard.keyUp = function (note, frequency) {
                 var new_nodes = [];
-		var new_gainNodes = [];
+
                 for (var i = 0; i < nodes.length; i++) {
                     if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
-                        //nodes[i].stop(context.currentTime + 1);
-                        gainNodes[i].gain.exponentialRampToValueAtTime(0.001, context.currentTime + 1);
-                      setTimeout(disconnectNode, 1000, nodes[i]);  
-                        //nodes[i].disconnect();
+                        nodes[i].stop(0);
+                        nodes[i].disconnect();
                     } else {
                         new_nodes.push(nodes[i]);
-                        new_gainNodes.push(gainNodes[i]);
                     }
                 }
 
                 nodes = new_nodes;
-                gainNodes = new_gainNodes;
             };
 			
 			
 			function change_key(new_key)
   {
   //window.alert(new_key);
- 
   // var elem = document.getElementById('keyboard');
   //elem.parentNode.removeChild(elem);
 

@@ -1,0 +1,79 @@
+html, body, #main {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #000000;
+}
+.view {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+
+h1, h2 {
+    font-family: 'Space Mono', monospace;
+	font-size: 1em;
+}
+
+a {
+    font-size:1.5em;
+}
+
+h1, a, a:visited, pre {
+    color: #fb2a3d;
+}
+
+h2 {
+    color: #076cf0;
+    font-size: 1.3em;
+
+}
+
+.container {
+    width: 1000px;
+    margin: 40px auto;
+}
+
+.keyboard {
+    width: 600px;
+    height: 150px;
+}
+
+.the-hancock {
+    float: left;
+    width: 300px;
+}
+
+pre {
+    margin-left: 0;
+}
+
+
+      #overlay{
+        position: fixed;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        -moz-opacity: 0.8;
+        filter: alpha(opacity=80);
+        opacity:.80;
+        z-index:1001;
+      }
+
+      #announcement{
+        display: none;
+        position: absolute;
+        width: 350px;
+        height: 250px;
+        padding: 0 16px;
+        border: 2px solid black;
+        background-color: white;
+        z-index:1002;
+      }
+
+      #close{
+        display: inherit;
+        float: center;
+      }
