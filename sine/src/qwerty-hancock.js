@@ -432,7 +432,10 @@
     var mouseUp = function (element, callback) {
         if (element.tagName.toLowerCase() == 'li') {
             mouse_is_down = false;
-            console.log("mouse up")
+            console.log("mouse up asdf")
+            console.log('ontouchstart' in document.documentElement)
+            console.log("hello")
+
             if (element.title.length > 1) {
 
                 darkenDown(element);
@@ -708,6 +711,7 @@
     var addListeners = function (keyboard_element) {
         var that = this;
         var lastKey = "";
+        var lastTouchUp = "";
         // Key is pressed down on keyboard.
         globalWindow.addEventListener('keydown', function (key) {
             if (isModifierKey(key)) {
@@ -730,12 +734,18 @@
 
         // Mouse is clicked down on keyboard element.
         keyboard_element.addEventListener('mousedown', function (event) {
-            mouseDown(event.target, that.keyDown);
+            if (lastTouchUp && lastTouchUp == event.target) {
+            } else {
+                mouseDown(event.target, that.keyDown);
+            }
+            lastTouchUp = "";
+
         });
 
         // Mouse is released from keyboard element.
         keyboard_element.addEventListener('mouseup', function (event) {
             mouseUp(event.target, that.keyUp);
+
         });
 
         // Mouse is moved over keyboard element.
@@ -758,12 +768,14 @@
 
             keyboard_element.addEventListener('touchend', function (event) {
                 console.log("touchend")
-                mouseUp(event.target, that.keyUp);
                 if (lastKey) {
                     console.log("trying to canle, ", lastKey)
                     mouseUp(lastKey, that.keyUp);
+                    lastTouchUp = lastKey
                     lastKey = ""
-
+                } else {
+                    mouseUp(event.target, that.keyUp);
+                    lastTouchUp = event.target;
                 }
             });
             console.log("doing stufff")
